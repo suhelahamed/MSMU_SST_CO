@@ -1,0 +1,17 @@
+\begin{table}[t]
+\centering
+\caption{Test-set performance of selective subtask offloading methods (per-user means $\pm$ std; UAV-augmented MSMU dataset).}
+\label{tab:offloading_results}
+\begin{tabular}{lccccc}
+\hline
+Method & Latency (s) & Energy (J) & Cost & Deadline Viol. & Subtask Acc. \\
+\hline
+Oracle & 2.606 $\pm$ 1.763 & 50.748 $\pm$ 65.980 & 30.439 $\pm$ 44.958 & 0.212 & 1.000 \\
+Edge-AI (MLP) & 2.708 $\pm$ 1.822 & 56.058 $\pm$ 66.827 & 33.193 $\pm$ 45.353 & 0.235 & 0.842 \\
+All-Local & 4.447 $\pm$ 3.469 & 76.199 $\pm$ 63.204 & 40.887 $\pm$ 42.453 & 0.529 & -- \\
+All-MCMF & 2.610 $\pm$ 1.762 & 50.743 $\pm$ 65.984 & 30.440 $\pm$ 44.957 & 0.213 & -- \\
+Random & 3.516 $\pm$ 2.448 & 63.689 $\pm$ 62.446 & 35.707 $\pm$ 43.125 & 0.403 & -- \\
+LR-Greedy & 3.176 $\pm$ 2.731 & 54.874 $\pm$ 65.140 & 32.005 $\pm$ 44.319 & 0.296 & 0.881 \\
+\hline
+\end{tabular}
+\end{table}

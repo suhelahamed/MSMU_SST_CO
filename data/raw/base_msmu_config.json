@@ -1,0 +1,17 @@
+{
+  "F_t_server_cpu_capacity": 33600000000.0,
+  "theta_max_delay_s": 2.0,
+  "P_t_transmit_power_w": 0.3,
+  "P_I_compute_power_w": 0.15,
+  "kappa_energy_coeff": 1e-28,
+  "B_bandwidth_hz": 80000000.0,
+  "N0_noise_power": 7.96159e-13,
+  "input_size_mu": 6500000.0,
+  "input_size_sigma": 3000000.0,
+  "input_size_low": 2000000.0,
+  "input_size_up": 11000000.0,
+  "f_local_mu": 6400000000.0,
+  "f_local_sigma": 5000000000.0,
+  "f_local_low": 1000000000.0,
+  "f_local_up": 10000000000.0
+}
