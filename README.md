@@ -1,4 +1,4 @@
-# MSMU_Comp_off: Edge-AI-based Selective Subtask Offloading in UAV-Supported MEC
+# MSMU_SST_CO: Edge-AI-based Selective Subtask Offloading in UAV-Supported MEC
 
 This repository contains code, data-processing scripts, and experiment pipelines for an **Edge-AI-based selective subtask computation offloading framework** built on top of the **MSMU-CO** multi-server multi-user offloading dataset generator.[web:9]
 
