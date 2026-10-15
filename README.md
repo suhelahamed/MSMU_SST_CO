@@ -1,6 +1,6 @@
 # MSMU-SST-CO: Edge-AI-based Selective Subtask Offloading in UAV-Supported MEC
 
-**Version 1.0** · Reproducible seed `42`
+**Version 1.0.1** · Reproducible seed `42` · Version 1.0.1 changes the README only (§5.3a, §12); no data changed
 **DOI:** [10.5281/zenodo.22084174](https://doi.org/10.5281/zenodo.22084174)
 
 This repository contains the generation pipeline, datasets, and experiment code for an
@@ -217,6 +217,34 @@ then derives distances, elevation angle, LoS probability, and effective rate to 
 server, plus scenario-level context (UAV count, minimum distance to any UAV, coverage
 indicators).
 
+### 5.3a Note on the uplink rate model
+
+- **Rate used for the oracle labels and for every reported cost.** For an offloaded subtask the
+  uplink rate is *R* = *B* log2(1 + *x*) with *x* = *P*tx *h*² / (*N*0 + *P*tx *h*²), where *h* is
+  the user's `best_channel_gain` (`build_subtask_dataset.py`, function `uplink_rate`). This is a
+  bounded, single-user form of the expression in the MSMU-CO generator, whose denominator adds
+  *P*tx *h*j² over all users connected to the same server. In this release users therefore do not
+  interfere with one another on the uplink, and each offloading user may use the full bandwidth
+  *B*. Earlier documents call *x* an "SINR"; it is not a signal-to-interference-plus-noise ratio
+  in the usual sense.
+- **Consequence.** Because *P*tx *h*² is many orders of magnitude larger than *N*0 for every user,
+  *x* is close to 1 and *R* is close to *B*. `python check_rates.py` reports, over the 36,000
+  subtask rows: *h* from 0.00139501 to 0.999878 (median 0.708637); *R* from 79.999921 to
+  80.000000 Mbit/s; no row below 99.9 % of *B*. The channel gain therefore has practically no
+  effect on the latency, energy or cost of an offloaded subtask. Offloading decisions are driven
+  by the 0.2 s setup delay, the subtask workload, the server share and the user's latency–energy
+  weight.
+- **UAV-augmentation rate.** The column `assigned_effective_rate` (`build_uav_dataset.py`) uses
+  *x* = *P*tx *h*eff / *N*0, a signal-to-noise ratio, also without interference. It is descriptive
+  only: it is excluded from the model inputs by the leakage guard (`train_edge_ai.py`,
+  `LEAK_COLS`) and is not used in any cost.
+- **Where users are coupled.** Users interact through the MCMF server assignment, computed by the
+  MSMU-CO generator with its interference-aware rate, and through the sharing of server CPU (the
+  MCMF resource ratio, or 1/*U*).
+- **Why this model.** The release studies which subtasks are offloaded and where computation is
+  placed, so the radio model is kept simple; the bounded form also avoids the very large Shannon
+  rates of the high-SNR form. Interference and bandwidth sharing are left to future versions.
+
 ### 5.4 Step 4 — Edge-AI training and evaluation
 
 ```bash
@@ -320,3 +348,11 @@ by these terms.
 Department of Information Technology
 Guru Ghasidas Vishwavidyalaya, Bilaspur, Chhattisgarh, India
 suhelahamed@ieee.org · [@suhelahamed](https://github.com/suhelahamed)
+
+---
+
+## 12. Changelog
+
+- **1.0.1** — README only: §5.3a describes the uplink rate model and `check_rates.py` reports the
+  rates. No data file, label or result changed.
+- **1.0** — first release.
